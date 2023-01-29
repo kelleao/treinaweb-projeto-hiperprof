@@ -26,7 +26,8 @@
       "@app/*": ["app/*"],
       "@pages":["pages/*"],
       "@data/*":["data/*"],
-      "@components/*":["ui/components/*"]
+      "@components/*":["ui/components/*"],
+      "@routes/*":["routes/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
