@@ -1,10 +1,10 @@
 import { Button, Typography } from "@mui/material";
-import { BoxAvatarStyled, BoxCardStyled, BoxContainsStyled, ImageStyled } from "./styles";
+import { BoxAvatarStyled, BoxContainsStyled, ImageStyled } from "./styles";
 
 export default function ProfessorCard() {
 
     return (
-        <BoxCardStyled>
+        <>
             <BoxAvatarStyled>
                 <ImageStyled src="https://github.com/kelleao.png" alt="" />
             </BoxAvatarStyled>
@@ -33,7 +33,7 @@ export default function ProfessorCard() {
                     Ver detalhes
                 </Button>
             </BoxContainsStyled>
-        </BoxCardStyled>
+        </>
     )
 
 }
