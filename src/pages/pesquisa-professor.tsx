@@ -5,7 +5,7 @@ import { Container, Icon, TextField } from "@mui/material";
 
 
 export default function PesquisaPorfessorPage() {
-    const { professores } = usePesquisaProfessor()
+    const { professores, onSearch } = usePesquisaProfessor()
     return (
         <Container>
         < TextField 
@@ -14,6 +14,7 @@ export default function PesquisaPorfessorPage() {
             InputProps={{
                 startAdornment: <Icon sx={{ mr: 1 }}>search</Icon>
             }}
+            onChange={({ target: { value }}) => onSearch(value)}
             fullWidth
             required        
         />
