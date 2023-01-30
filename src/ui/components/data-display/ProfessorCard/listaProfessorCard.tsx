@@ -1,12 +1,15 @@
+import { ProfessorInterface } from "@data/@types/professor";
 import ProfessorCard from ".";
 import { BoxCardItemStyled, ListaStyled } from "./styles";
 
 export interface ListaProfessorCardProps{
-    professores: { id: number }[];
+    professores: ProfessorInterface[];
+    onClick: (professor: ProfessorInterface) => void;
 }
 
 export default function ListaProfessorCard({
     professores,
+    onClick
 }: ListaProfessorCardProps) {
     return (
         <ListaStyled>
@@ -14,7 +17,7 @@ export default function ListaProfessorCard({
                 professores.map((professor) => {
                     return (
                         <BoxCardItemStyled key={professor.id}>
-                            <ProfessorCard />
+                            <ProfessorCard professor={professor} onClick={onClick} />
                         </BoxCardItemStyled>
                     )
                 })

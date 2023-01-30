@@ -1,12 +1,24 @@
+import { ProfessorInterface } from "@data/@types/professor";
 import { Button, Typography } from "@mui/material";
 import { BoxAvatarStyled, BoxContainsStyled, ImageStyled } from "./styles";
 
-export default function ProfessorCard() {
+export interface ProfessorCardProps {
+    professor: ProfessorInterface;
+    onClick: (professor: ProfessorInterface) => void;
+}
+
+export default function ProfessorCard({ professor, onClick }: ProfessorCardProps) {
 
     return (
         <>
             <BoxAvatarStyled>
-                <ImageStyled src="https://github.com/kelleao.png" alt="" />
+                {professor.foto_perfil ? (
+                    <ImageStyled src={professor.foto_perfil!} alt="" />
+
+                ) : (
+                    <ImageStyled src={'/user.svg'} alt="" style={{ width: "50%" }}/>
+                )}
+
             </BoxAvatarStyled>
             <BoxContainsStyled>
                 <div className="text-container">
@@ -15,20 +27,20 @@ export default function ProfessorCard() {
                         className="descricao"
                         paragraph
                     >
-                        Nome
+                        {professor.nome}
                     </Typography>
                     <Typography 
                         sx={{ display: "flex", alignItems: "center" }}
                         className='descricao'
                         variant="body2" 
                         paragraph>
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea, exercitationem aperiam enim at ab quis nisi dolorem dignissimos delectus iure quo doloribus expedita voluptate dolore accusamus! Eveniet sunt voluptatem laborum!
+                            {professor.descricao}
                     </Typography>
                 </div>
                 <Button 
                     variant="outlined" 
                     color="inherit" 
-                    onClick={() => {}}
+                    onClick={() => onClick(professor)}
                 >
                     Ver detalhes
                 </Button>
