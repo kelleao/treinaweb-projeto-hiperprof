@@ -1,8 +1,11 @@
 import PageTitle from "@components/data-display/PageTitle";
 import ListaProfessorCard from "@components/data-display/ProfessorCard/listaProfessorCard";
+import usePesquisaProfessor from "@data/hooks/pages/usePesquisaProfessor";
 import { Container, Icon, TextField } from "@mui/material";
 
+
 export default function PesquisaPorfessorPage() {
+    const { professores } = usePesquisaProfessor()
     return (
         <Container>
         < TextField 
@@ -20,7 +23,7 @@ export default function PesquisaPorfessorPage() {
         />
 
         <ListaProfessorCard 
-            professores={[]} 
+            professores={professores ?? []} 
             onClick={(professor) => {}}
             />
         </Container>
