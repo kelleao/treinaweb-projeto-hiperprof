@@ -27,17 +27,21 @@ export default function usePesquisaProfessor() {
         clearTimeout(timeOutRef);
         const time = setTimeout(() => {
             setSearch(value);
+            Router.pesquisaProfessor.push(router, value);      
         }, 1000);
-
         setTimeOutRef(time);
-        
-        Router.pesquisaProfessor.push(router, value);
-       
+    }
+
+    function selecionarProfessor(professor: ProfessorInterface) {
+        sessionStorage.setItem('hiperprof_professor', JSON.stringify(professor));
+        Router.detalheProfessor.push(router);
+
     }
 
     return {
         professores,
         onSearch,
+        selecionarProfessor
     }
 
 }

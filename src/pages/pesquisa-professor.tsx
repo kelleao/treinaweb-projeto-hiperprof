@@ -5,7 +5,7 @@ import { Container, Icon, TextField } from "@mui/material";
 
 
 export default function PesquisaPorfessorPage() {
-    const { professores, onSearch } = usePesquisaProfessor()
+    const { professores, onSearch, selecionarProfessor } = usePesquisaProfessor()
     return (
         <Container>
         < TextField 
@@ -25,7 +25,7 @@ export default function PesquisaPorfessorPage() {
 
         <ListaProfessorCard 
             professores={professores ?? []} 
-            onClick={(professor) => {}}
+            onClick={selecionarProfessor}
             />
         </Container>
 
