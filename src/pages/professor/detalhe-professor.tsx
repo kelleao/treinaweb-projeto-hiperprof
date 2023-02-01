@@ -1,6 +1,7 @@
 import Fetch from "@components/data-display/Fetch";
 import PageTitle from "@components/data-display/PageTitle";
 import ListaProfessorCard from "@components/data-display/ProfessorCard/listaProfessorCard";
+import Dialog from "@components/feedback/Dialog";
 import useDetalheProfessor from "@data/hooks/pages/professor/useDetalheProfessor";
 import { TextFormatService } from "@data/services/TextFormatService";
 import { Button, Container, Typography } from "@mui/material";
@@ -53,6 +54,10 @@ export default function DetalheProfessorPage() {
                     )
                 }}
             />
+
+            <Dialog title="Titulo do dialog">
+                <p>DETALHE DO PROFESSOR</p>
+            </Dialog>
         </Container>
     )
 
