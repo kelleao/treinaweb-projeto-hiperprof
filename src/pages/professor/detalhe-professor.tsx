@@ -1,9 +1,14 @@
 import PageTitle from "@components/data-display/PageTitle";
-import { Button, Container, Typography } from "@mui/material";
+import ListaProfessorCard from "@components/data-display/ProfessorCard/listaProfessorCard";
+import useDetalheProfessor from "@data/hooks/pages/professor/useDetalheProfessor";
+import { TextFormatService } from "@data/services/TextFormatService";
+import { Button, CircularProgress, Container, Typography } from "@mui/material";
 import { BoxCardProfessor, BoxDescription, BoxImage } from "@styles/pages/professor/detalhe-professor.stales";
 
 
 export default function DetalheProfessorPage() {
+    const {professor, selecionarProfessor, professores} = useDetalheProfessor();
+
     return (
         <Container>
             <PageTitle 
@@ -11,22 +16,34 @@ export default function DetalheProfessorPage() {
                 subtitle="Veja os detalhes do professor e verifique se ele é o ideal para você se candidatar a uma aula"
             />
             <BoxCardProfessor>
-                <BoxImage foto={'https://github.com/kelleao.png'}/>
+                <BoxImage foto={professor?.foto_perfil}/>
                 <BoxDescription>
                     <div className="box_esquerda">
-                        <Typography sx={{ my: 3 }} variant="h6">Nome</Typography>
+                        <Typography sx={{ my: 3 }} variant="h6">{professor?.nome}</Typography>
                         <Typography sx={{ my: 2 }} className="descricao" paragraph variant="body2">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur quod provident dicta dolores ratione, 
-                            quaerat autem ea sunt, quos iste voluptates odit explicabo nisi dolorum officia numquam harum obcaecati fugit?
+                            {professor?.descricao}
                         </Typography>
                     </div>
                     <div className="box_direita">
                         <Typography variant="body2" sx={{ my: 2 }}>PREÇO HORA/AULA</Typography>
-                        <Typography variant="h4" paragraph>31/01/2023</Typography>
+                        <Typography variant="h4" paragraph>{TextFormatService.currency(professor?.valor_hora) }</Typography>
                         <Button variant="outlined" color="inherit" onClick={() => {}}>Contratar</Button>
                     </div>
                 </BoxDescription>
             </BoxCardProfessor>
+            <Typography variant="body2" color={'grey'} sx={{ my: 10 }}>{professor?.descricao}</Typography>
+            {professores ? (
+                professores.length === 0 ? (
+                    'Nenhum professor encontrado'
+                ) : (
+                    <ListaProfessorCard  
+                        professores={professores} 
+                        onClick={selecionarProfessor}
+                    />
+                )
+            ) : (
+                <CircularProgress />
+            )}
         </Container>
     )
 
