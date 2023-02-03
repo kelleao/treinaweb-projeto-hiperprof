@@ -29,9 +29,9 @@ export default function useDetalheProfessor() {
             Router.home.push(router);
         }
 
-        // return () => {
-        //     sessionStorage.removeItem('hiperprof_professor');
-        // };
+        return () => {
+            sessionStorage.removeItem('hiperprof_professor');
+        };
 
     }, []);
 
@@ -65,7 +65,7 @@ export default function useDetalheProfessor() {
             data_aula: formatDataToJson(aluno.data_aula as string),
         } as AlunosInterface;
 
-        ApiService.post(`/api/professores/${professor!.id}/alunos`, newDate)
+        await ApiService.post(`/api/professores/${professor!.id}/alunos`, newDate)
             .then(
                 () => {
                     setOpenDialog(false);
