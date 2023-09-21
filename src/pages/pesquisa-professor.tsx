@@ -5,7 +5,7 @@ import ProfessorCard from "ui/components/data-display/ProfessorCard";
 import ListaProfessorCard from "ui/components/data-display/ProfessorCard/listaProfessorCard";
 
 export default function PesquisaProfessorPage() {
-  const { professores } = usePesquisaProfessor();
+  const { professores, onSearch } = usePesquisaProfessor();
 
   return (
     <Container>
@@ -15,6 +15,7 @@ export default function PesquisaProfessorPage() {
         InputProps={{
           startAdornment: <Icon sx={{ mr: 1 }}>search</Icon>,
         }}
+        onChange={({ target: { value } }) => onSearch(value)}
         fullWidth
         required
       />
