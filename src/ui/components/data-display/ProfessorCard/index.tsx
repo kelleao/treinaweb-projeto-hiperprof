@@ -1,16 +1,29 @@
 import { Button, Typography } from "@mui/material";
 import { BoxAvatarStyled, BoxContainsStyled, ImageStyled } from "./styles";
+import { ProfessorInterface } from "@data/@types/professor";
 
-export default function ProfessorCard() {
+export interface ProfessorCardProps {
+  professor: ProfessorInterface;
+  onclick: (professor: ProfessorInterface) => void;
+}
+
+export default function ProfessorCard({
+  professor,
+  onclick,
+}: ProfessorCardProps) {
   return (
     <>
       <BoxAvatarStyled>
-        <ImageStyled src="https://github.com/kelleao.png" alt="" />
+        {professor.foto_perfil ? (
+          <ImageStyled src={professor.foto_perfil!} alt="" />
+        ) : (
+          <ImageStyled src={"/user.svg"} alt="" style={{ width: "50%" }} />
+        )}
       </BoxAvatarStyled>
       <BoxContainsStyled>
         <div className="text-container">
           <Typography variant="h6" className="descricao" paragraph>
-            Nome
+            {professor.nome}
           </Typography>
           <Typography
             sx={{ display: "flex", alignItems: "center" }}
@@ -18,13 +31,16 @@ export default function ProfessorCard() {
             variant="body2"
             paragraph
           >
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente
-            velit quisquam perspiciatis atque consectetur, perferendis ex ipsa
-            dicta amet nostrum voluptatibus rerum? Laboriosam, voluptatum velit
-            nostrum aliquam qui molestias voluptatibus.
+            {professor.descricao}
           </Typography>
         </div>
-        <Button variant="outlined" color="inherit" onClick={() => {}}>
+        <Button
+          variant="outlined"
+          color="inherit"
+          onClick={() => {
+            onclick(professor);
+          }}
+        >
           Ver detalhes
         </Button>
       </BoxContainsStyled>

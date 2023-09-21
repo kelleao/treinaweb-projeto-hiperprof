@@ -19,9 +19,7 @@ export default function PesquisaProfessorPage() {
         title="Professores Encontrados"
         subtitle="Clique sobre um professor para ver os detalhes e poder marcar uma aula com o mesmo"
       />
-      <ListaProfessorCard
-        professores={[{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }]}
-      />
+      <ListaProfessorCard professores={[]} onclick={(professor) => {}} />
     </Container>
   );
 }
