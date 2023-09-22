@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { AxiosResponse } from "axios";
 import { Router } from "@routes/routes";
+import { strict } from "assert";
 
 export default function usePesquisaProfessor() {
   const router = useRouter(),
@@ -25,12 +26,15 @@ export default function usePesquisaProfessor() {
     clearTimeout(timeOutRef);
     const time = setTimeout(() => {
       setSearch(value);
-    }, 2000);
-
+      Router.pesquisaProfessor.push(router, value);
+    }, 1000);
     setTimeOutRef(time);
-
-    Router.pesquisaProfessor.push(router, value);
   }
 
-  return { professores, onSearch };
+  function selecionarProfessor(professor: ProfessorInterface) {
+    sessionStorage.setItem("hiperprof_professor", JSON.stringify(professor));
+    Router.detalheProfessor.push(router);
+  }
+
+  return { professores, onSearch, selecionarProfessor };
 }
