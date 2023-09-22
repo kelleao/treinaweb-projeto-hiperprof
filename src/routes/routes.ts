@@ -9,7 +9,7 @@ export const Router = {
     icon: "",
   },
   pesquisaProfessor: {
-    name: "/pesquisa-porfessor",
+    name: "/pesquisa-professor",
     push: function (router: NextRouter, search?: string) {
       router.push({ pathname: this.name, query: { search } });
     },

@@ -1,11 +1,11 @@
 import { Router } from "@routes/routes";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 
 export default function useIndex() {
   const router = useRouter(),
     [search, setSearch] = useState(""),
-    [messageErro, setMessageErro] = useState<string>("");
+    [messageErro, setMessageErro] = useState("");
 
   function onBuscarProfessor(event: FormEvent) {
     event.preventDefault();
