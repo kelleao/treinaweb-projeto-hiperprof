@@ -1,5 +1,6 @@
 import usePesquisaProfessor from "@data/hooks/pages/usePesquisaProfessor";
 import { TextField, Icon, Container } from "@mui/material";
+import Fetch from "ui/components/data-display/Fetch";
 import PageTitle from "ui/components/data-display/PageTile";
 import ListaProfessorCard from "ui/components/data-display/ProfessorCard/listaProfessorCard";
 
@@ -22,9 +23,18 @@ export default function PesquisaProfessorPage() {
         title="Professores Encontrados"
         subtitle="Clique sobre um professor para ver os detalhes e poder marcar uma aula com o mesmo"
       />
-      <ListaProfessorCard
-        professores={professores ?? []}
-        onclick={selecionarProfessor}
+
+      <Fetch
+        data={professores}
+        mensage={"Nenhum Professor Encontrado"}
+        render={(professores) => {
+          return (
+            <ListaProfessorCard
+              professores={professores}
+              onclick={selecionarProfessor}
+            />
+          );
+        }}
       />
     </Container>
   );
