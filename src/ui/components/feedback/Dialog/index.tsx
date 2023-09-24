@@ -30,7 +30,7 @@ export default function Dialog({
       </DialogTitle>
       <DialogContent>{children}</DialogContent>
       <DialogActions>
-        {oncancel && (
+        {onCancel && (
           <Button variant="outlined" onClick={onCancel} sx={{ py: 2, px: 3 }}>
             Cancelar
           </Button>

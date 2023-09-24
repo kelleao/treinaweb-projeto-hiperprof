@@ -1,6 +1,12 @@
 import useDetalheProfessor from "@data/hooks/pages/professor/useDetalheProfessor";
 import { TextFormatService } from "@data/services/TextFormatService";
-import { Button, Container, Typography } from "@mui/material";
+import {
+  Button,
+  Container,
+  Snackbar,
+  TextField,
+  Typography,
+} from "@mui/material";
 import Fetch from "ui/components/data-display/Fetch";
 import PageTitle from "ui/components/data-display/PageTile";
 import ListaProfessorCard from "ui/components/data-display/ProfessorCard/listaProfessorCard";
@@ -10,9 +16,22 @@ import {
   BoxDescription,
   BoxImage,
 } from "ui/styles/pages/professor/detalhe-professor.styles";
+import InputMask from "react-input-mask";
 
 export default function DetalheProfessorPage() {
-  const { professor, professores, selecionarProfessor } = useDetalheProfessor();
+  const {
+    professor,
+    professores,
+    selecionarProfessor,
+    openDialog,
+    setOpenDialog,
+    setAluno,
+    handleSutmit,
+    snackMessage,
+    setSnackMessage,
+    alunoErro,
+    setAlunoErro,
+  } = useDetalheProfessor();
 
   return (
     <Container>
@@ -41,7 +60,11 @@ export default function DetalheProfessorPage() {
             <Typography variant="h4" paragraph>
               {TextFormatService.currency(professor?.valor_hora)}
             </Typography>
-            <Button variant="outlined" color="inherit" onClick={() => {}}>
+            <Button
+              variant="outlined"
+              color="inherit"
+              onClick={() => setOpenDialog(true)}
+            >
               Contratar
             </Button>
           </div>
@@ -52,7 +75,6 @@ export default function DetalheProfessorPage() {
       </Typography>
       <Fetch
         data={professores?.filter(({ id }) => id !== professor?.id)}
-        mensage={"Nenhum professor encontrado"}
         maxLength={3}
         render={(professoresFiltrado) => {
           return (
@@ -70,7 +92,67 @@ export default function DetalheProfessorPage() {
           );
         }}
       />
-      <Dialog title="Titulo do dialog"></Dialog>
+      <Dialog
+        isOpen={openDialog}
+        title="Preencha suas informações"
+        onConfirm={handleSutmit}
+        onClose={() => {
+          setOpenDialog(false);
+          setAlunoErro(undefined);
+        }}
+      >
+        <TextField
+          label={"Seu nome"}
+          error={alunoErro?.nome != undefined}
+          helperText={alunoErro?.nome}
+          onChange={({ target: { value } }) => {
+            setAluno((prevState) => {
+              return { ...prevState, nome: value };
+            });
+          }}
+          fullWidth
+        />
+        <TextField
+          label={"Seu E-mail"}
+          error={alunoErro?.email != undefined}
+          helperText={alunoErro?.email}
+          type={"email"}
+          sx={{ my: 3 }}
+          onChange={({ target: { value } }) => {
+            setAluno((prevState) => {
+              return { ...prevState, email: value };
+            });
+          }}
+          fullWidth
+        />
+        <InputMask
+          mask={"99/99/9999 99:99"}
+          onChange={({ target: { value } }: any) => {
+            setAluno((prevState) => {
+              return { ...prevState, data_aula: value };
+            });
+          }}
+        >
+          {() => {
+            return (
+              <TextField
+                label={"Horário da aula"}
+                error={alunoErro?.data_aula != undefined}
+                helperText={alunoErro?.data_aula as string}
+                fullWidth
+              />
+            );
+          }}
+        </InputMask>
+      </Dialog>
+      <Snackbar
+        open={snackMessage.length > 0}
+        message={snackMessage}
+        autoHideDuration={4000}
+        onClose={() => {
+          setSnackMessage("");
+        }}
+      />
     </Container>
   );
 }
