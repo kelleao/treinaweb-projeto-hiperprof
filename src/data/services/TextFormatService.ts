@@ -14,4 +14,11 @@ export const TextFormatService = {
 
     return CurrencyFormatter.format(price);
   },
+
+  dataFromText(value: string): string {
+    var data = new Date(value);
+    return `${data.toLocaleDateString("pt-BR")} ${data.toLocaleTimeString(
+      "pt-BR"
+    )}`;
+  },
 };
