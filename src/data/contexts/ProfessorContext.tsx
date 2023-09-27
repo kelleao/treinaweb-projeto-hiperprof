@@ -9,7 +9,7 @@ import {
 
 interface ProfessorReducerInterface {
   ProfessorState: ProfessorInterface | undefined;
-  ProfessorDispatch: Dispatch<SetStateAction<ProfessorInterface>>;
+  ProfessorDispatch: Dispatch<SetStateAction<ProfessorInterface | undefined>>;
 }
 
 const initialValue: ProfessorReducerInterface = {
