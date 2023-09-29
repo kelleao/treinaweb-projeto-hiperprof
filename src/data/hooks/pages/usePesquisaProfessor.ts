@@ -4,7 +4,6 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { AxiosResponse } from "axios";
 import { Router } from "@routes/routes";
-import { strict } from "assert";
 
 export default function usePesquisaProfessor() {
   const router = useRouter(),
