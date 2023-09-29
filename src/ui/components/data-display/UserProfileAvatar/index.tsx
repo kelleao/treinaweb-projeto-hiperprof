@@ -35,7 +35,7 @@ export default function UserProfileAvatar({
           ) : (
             <Skeleton width={100} variant={"text"} animation={"wave"} />
           )}
-          <Grid>
+          <Grid item>
             <Icon>arrow_drop_down</Icon>
           </Grid>
         </Grid>
