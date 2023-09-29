@@ -12,6 +12,7 @@ export default function Home() {
         title="ENCONTRE O PROFESSOR IDEAL PARA VOCÊ!"
         subtitle="Pesquise pelo professor ideal para você"
       />
+
       <TextField
         sx={{ mt: 3, mb: 1 }}
         label={"Encontre um  Professor"}
