@@ -8,10 +8,11 @@ import { ProfessorContext } from "@data/contexts/ProfessorContext";
 import { ApiService } from "@data/services/ApiService";
 import { FormSchemaService } from "@data/services/FormSchemaService";
 import { getUser } from "@data/services/MeService";
+import { TextFormatService } from "@data/services/TextFormatService";
 import { Router } from "@routes/routes";
 import { AxiosError, AxiosResponse } from "axios";
 import { useRouter } from "next/router";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 
 export default function useCadastroProfessor() {
   const [valuesCadastro, setValuesCadastro] = useState(
@@ -22,7 +23,35 @@ export default function useCadastroProfessor() {
     [loading, setLoading] = useState(false),
     [snackMessage, setSnackMessage] = useState(""),
     router = useRouter(),
-    { ProfessorDispatch, ProfessorState } = useContext(ProfessorContext);
+    { ProfessorDispatch, ProfessorState: professor } =
+      useContext(ProfessorContext),
+    [openDialog, setOpenDialog] = useState(false);
+
+  useEffect(() => {
+    setValuesCadastro({
+      ...professor,
+      valor_hora: TextFormatService.currency(professor?.valor_hora),
+    } as ProfessorCadastroInterface);
+  }, [professor]);
+
+  async function saveFoto(files: FileList) {
+    const foto = { foto: files[0] };
+    ApiService.post("/api/professores/foto", foto, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${localStorage.getItem("token_hiperprof")}`,
+      },
+    })
+      .then(({ data }: AxiosResponse<{ message: string }>) => {
+        setSnackMessage(data.message);
+        handleGetUser();
+      })
+      .catch(({ response }: AxiosError<{ message: string }>) => {
+        if (response) {
+          setSnackMessage(response!.data.message);
+        }
+      });
+  }
 
   async function handleSubmit() {
     const formValidate = FormSchemaService.cadastroProfessor(valuesCadastro);
@@ -40,11 +69,22 @@ export default function useCadastroProfessor() {
         ),
       } as ProfessorCadastroInterface;
 
-      await ApiService.post("/api/professores", data)
+      delete data.foto_perfil;
+
+      const token = localStorage.getItem("token_hiperprof");
+
+      const typeHttp = token ? ApiService.put : ApiService.post;
+
+      await typeHttp("/api/professores", data, {
+        headers: token ? { Authorization: `Bearer ${token}` } : {},
+      })
         .then(async () => {
-          setSnackMessage("Professor cadastrado com sucesso");
-          handleLogin();
-          Router.listaDeAlunos.push(router);
+          await handleLogin();
+          if (!token) {
+            setSnackMessage("Professor cadastrado com sucesso");
+            Router.listaDeAlunos.push(router);
+          }
+          token && setSnackMessage("Professor editado com sucesso");
         })
         .catch(
           ({
@@ -87,6 +127,31 @@ export default function useCadastroProfessor() {
       });
   }
 
+  async function deleteAccount() {
+    if (!loading) {
+      setLoading(true);
+      ApiService.delete("/api/professores", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token_hiperprof")}`,
+        },
+      })
+        .then(() => {
+          ProfessorDispatch(undefined);
+          localStorage.removeItem("token_hiperprof");
+          localStorage.removeItem("refresh_token");
+          Router.home.push(router);
+        })
+        .catch(({ response }: AxiosError<{ message: string }>) => {
+          if (response) {
+            setSnackMessage(response.data.message);
+          }
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    }
+  }
+
   return {
     valuesCadastro,
     valuesErroCadastro,
@@ -95,5 +160,10 @@ export default function useCadastroProfessor() {
     setValuesCadastro,
     handleSubmit,
     loading,
+    professor,
+    saveFoto,
+    openDialog,
+    setOpenDialog,
+    deleteAccount,
   };
 }

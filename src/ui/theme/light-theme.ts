@@ -72,6 +72,15 @@ const theme = createTheme({
             },
           },
         },
+        {
+          props: {
+            variant: "outlined",
+            color: "error",
+          },
+          style: {
+            padding: "16px 40px",
+          },
+        },
       ],
     },
     MuiLink: {
