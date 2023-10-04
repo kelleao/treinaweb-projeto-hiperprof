@@ -2,7 +2,6 @@ import { AlunoInterface } from "@data/@types/alunos";
 import usePainelProfessor from "@data/hooks/pages/professor/usePainelProfessor";
 import { TextFormatService } from "@data/services/TextFormatService";
 import {
-  Accordion,
   AccordionDetails,
   AccordionSummary,
   Box,
