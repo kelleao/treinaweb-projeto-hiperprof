@@ -1,5 +1,5 @@
 export interface AlunoInterface {
-  id?: number;
+  id: number;
   nome?: string;
   email?: string;
   data_aula?: string | Date;
