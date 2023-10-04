@@ -16,7 +16,7 @@ export default function ListaProfessorCard({
       {professores.map((professor) => {
         return (
           <BoxCarItemdStyled key={professor.id}>
-            <ProfessorCard professor={professor} onclick={onclick} />;
+            <ProfessorCard professor={professor} onclick={onclick} />
           </BoxCarItemdStyled>
         );
       })}
