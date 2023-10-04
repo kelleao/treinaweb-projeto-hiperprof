@@ -16,11 +16,7 @@ export default function useDetalheProfessor() {
     [professor, setProfessor] = useState<ProfessorInterface>(),
     [professores, setProfessores] = useState<ProfessorInterface[]>(),
     [openDialog, setOpenDialog] = useState<boolean>(false),
-    [aluno, setAluno] = useState<AlunoInterface>({
-      nome: "",
-      data_aula: "",
-      email: "",
-    }),
+    [aluno, setAluno] = useState({} as AlunoInterface),
     [snackMessage, setSnackMessage] = useState(""),
     [alunoErro, setAlunoErro] = useState<AlunoErroResponseInterface>();
 
@@ -74,7 +70,7 @@ export default function useDetalheProfessor() {
     await ApiService.post(`/api/professores/${professor!.id}/alunos`, newDate)
       .then(() => {
         setOpenDialog(false);
-        setAluno({ data_aula: "", email: "", nome: "" });
+        setAluno({} as AlunoInterface);
         setSnackMessage("Agendado com sucesso");
       })
       .catch(
